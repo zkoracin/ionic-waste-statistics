@@ -1,0 +1,47 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Waste Types</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Waste Types</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container" class="ion-text-center">
+    <ion-card *ngIf="types.length; else noTypes">
+      <ion-card-header>
+        <ion-card-title>Existing Waste Types</ion-card-title>
+        <ion-card-content>
+          <ion-list>
+            <ion-item class="full" *ngFor="let type of types">
+              <ion-label>
+                <h3>{{ type.name }}</h3>
+              </ion-label>
+              <ion-button id="present-alert" color="danger" (click)="onDelete(type)">
+                <ion-icon name="trash"></ion-icon>
+              </ion-button>              
+              <ion-button color="primary" (click)="onUpdate(type)">
+                <ion-icon name="create"></ion-icon>
+              </ion-button>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card-header>
+    </ion-card>
+    <ng-template #noTypes>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>No Waste Types yet</ion-card-title>
+          <ion-card-subtitle>Create new waste type ....</ion-card-subtitle>
+        </ion-card-header>
+      </ion-card>
+    </ng-template>
+  </div>
+</ion-content>

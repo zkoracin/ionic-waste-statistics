@@ -1,0 +1,48 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Create Waste</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Create Waste</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container">
+    <ion-grid >
+      <ion-row>
+        <ion-col>
+          <ion-card *ngIf="enableForm; else empty">
+            <ion-card-content>
+              <form [formGroup]="form" (submit)="onAdd()">
+                <ion-select label="Select waste type" labelPlacement="floating" fill="outline" class="ion-margin-bottom" formControlName="type">
+                  <ion-select-option *ngFor="let type of wasteTypes" [value]="type">{{ type }}</ion-select-option>
+                </ion-select>
+                
+                <ion-input formControlName="value" label="Waste in kg" labelPlacement="floating" type="number" fill="outline"></ion-input>
+                <ion-datetime formControlName="date" presentation="date" datetime="datetime" class="ion-margin-top ion-margin-bottom">
+                </ion-datetime>
+      
+                <ion-button type="submit" expand="block">Add</ion-button>
+              </form>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ng-template #empty>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>No Waste Type found</ion-card-title>
+          <ion-card-subtitle>Create waste type first</ion-card-subtitle>
+        </ion-card-header>
+      </ion-card>
+    </ng-template>
+  </div>
+</ion-content>

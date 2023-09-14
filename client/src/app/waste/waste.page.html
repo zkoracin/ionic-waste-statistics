@@ -1,0 +1,100 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ wasteType | uppercase }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">{{ wasteType }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container" class="ion-text-center">
+    <ion-grid *ngIf="wasteByType.length; else empty">
+      <ion-row>
+        <ion-col>
+          <ion-card>
+            <ion-card-header>
+              <ion-card-subtitle>
+                Your {{ wasteType | uppercase }} waste for year {{ selectedYear }}
+              </ion-card-subtitle>
+              <ion-card-title>{{ wasteSumByYear }}kg </ion-card-title>
+            </ion-card-header>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <div>
+        <ion-row>
+          <ion-col>
+            <ion-select 
+              label="Select a year"
+              label-placement="floating"
+              class="ion-padding-start ion-padding-end"
+              fill="outline"
+              [compareWith]="compareWith"
+              [value]="selectedYear"
+              (ionChange)="handleChange($event)"
+            >
+              <ion-select-option *ngFor="let year of years" [value]="year">
+                {{ year }}
+              </ion-select-option>
+            </ion-select>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <canvas baseChart
+              [data]="barChartData"
+              [options]="barChartOptions"
+              [legend]="barChartLegend"
+              [type]="'bar'">
+            </canvas>
+          </ion-col>
+        </ion-row>
+  
+        <ion-row>
+          <ion-col>
+            <ion-card>
+              <ion-card-header>
+                <ion-card-subtitle>{{ wasteType | uppercase }} waste entries</ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-list>
+                  <ion-item class="full" *ngFor="let waste of wasteByYear">
+                    <ion-label>
+                      <h3>{{ waste.value }} kg</h3>
+                      <p>{{ waste.date | date }}</p>
+                    </ion-label>
+                    <ion-button color="danger" (click)="onDelete(waste.id)">
+                      <ion-icon name="trash"></ion-icon>
+                    </ion-button>
+                    <ion-button color="primary" (click)="onUpdate(waste)">
+                      <ion-icon name="create"></ion-icon>
+                    </ion-button>
+                  </ion-item>
+                </ion-list>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </div>
+    </ion-grid>
+    <ng-template #empty>
+      <ion-row>
+        <ion-col>
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>No entries for {{ wasteType }} waste</ion-card-title>
+              <ion-card-subtitle>Create some ...</ion-card-subtitle>
+            </ion-card-header>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ng-template>  
+  </div>
+</ion-content>

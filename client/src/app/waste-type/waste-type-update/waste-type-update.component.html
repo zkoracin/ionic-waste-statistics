@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Update Waste Type</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="light" (click)="onCancel()" [strong]="true">Cancel</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-content>
+      <form [formGroup]="form" (submit)="onSubmit()">        
+        <ion-input formControlName="name" label="Waste Type" labelPlacement="floating" type="text" fill="outline"></ion-input>
+        <ion-button class="ion-margin-top" type="submit" expand="block">Update</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
